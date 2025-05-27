@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="styles/colors-dark.css">
   <link rel="stylesheet" href="styles/colors-light.css">
   <style>
-    /* Remove color variables from here, keep only component styles */
     html {
       scroll-behavior: smooth;
       height: 100%;
@@ -21,16 +20,13 @@
     body {
       min-height: 100vh;
       background: var(--color-bg);
-      color: #fff;
+      color: var(--color-event-info-text);
       margin: 0;
       padding: 0;
       font-family: 'Inter', Arial, sans-serif;
       position: relative;
       z-index: 0;
       transition: background 0.3s, color 0.3s;
-    }
-    body.light-theme {
-      color: #222;
     }
     body::before {
       content: '';
@@ -78,27 +74,35 @@
       box-shadow: 0 0 32px 0 rgba(0,0,0,0.4);
       padding: 0 0 24px 0;
       transition: background 0.3s;
+      margin-top: 56px; /* Height of disclaimer */
     }
-    body.light-theme .page-container {
-      background: #fffefb;
-      box-shadow: 0 0 32px 0 rgba(255,136,0,0.08);
+    @media (max-width: 576px) {
+      .page-container {
+        margin-top: 70px; /* Slightly more for mobile */
+      }
     }
     section {
       padding: 60px 0;
     }
     .navbar {
       background: var(--color-navbar) !important;
+      top: 56px; /* Push navbar below disclaimer */
+    }
+    @media (max-width: 576px) {
+      .navbar.fixed-top {
+        top: 70px;
+      }
     }
     .navbar-brand, .nav-link {
       color: var(--color-navbar-link) !important;
       font-weight: bold;
-      border-radius: 18px; /* Always rounded for smooth transition */
+      border-radius: 18px;
       transition: background 0.25s, border-radius 0.25s;
     }
     .navbar-nav .nav-link.active, .navbar-nav .nav-link:focus, .navbar-nav .nav-link:hover {
       color: var(--color-navbar-link-active) !important;
       background: var(--color-navbar-link-bg);
-      border-radius: 18px; /* More rounded on hover */
+      border-radius: 18px;
       transition: background 0.25s, border-radius 0.25s;
     }
     h1, h2, h3, h4, h5, h6 {
@@ -119,11 +123,8 @@
     }
     .list-group-item {
       background: var(--color-list-bg);
-      color: #fff;
+      color: var(--color-event-info-text);
       border: 1px solid var(--color-list-border);
-    }
-    body.light-theme .list-group-item {
-      color: #222;
     }
     .badge.bg-primary {
       background: var(--color-badge-bg) !important;
@@ -165,9 +166,6 @@
     .event-expand-btn[aria-expanded="true"] {
       color: var(--color-navbar-link-active);
     }
-    body.light-theme .event-expand-btn[aria-expanded="true"] {
-      color: #000;
-    }
     .event-large-info {
       margin-top: 0.5em;
       background: var(--color-event-info-bg);
@@ -176,9 +174,6 @@
       color: var(--color-event-info-text);
       border: 1px solid var(--color-event-info-border);
       animation: fadeIn 0.3s;
-    }
-    body.light-theme .event-large-info {
-      color: #000;
     }
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -197,7 +192,6 @@
     }
     .theme-toggle-btn:hover, .theme-toggle-btn:focus {
       color: var(--color-navbar-link-active);
-      /* Match navbar hover color */
     }
     .theme-toggle-btn i {
       border-radius: 50%;
@@ -206,9 +200,6 @@
     }
     .theme-toggle-btn:hover i, .theme-toggle-btn:focus i {
       background: var(--color-navbar-link-bg);
-    }
-    body.light-theme {
-      color: #222;
     }
     /* Instagram embed background and border for visibility in light theme */
     #contact iframe {
@@ -225,6 +216,10 @@
 </head>
 
 <body>
+  <!-- Disclaimer: Work in progress -->
+  <div class="alert alert-warning text-center mb-0 w-100" style="border-radius:0; position:fixed; top:0; left:0; width:100%; z-index:2000;">
+    <strong>Huom!</strong> Tämä sivu on työn alla. Älä luota vielä sivun tietoihin.
+  </div>
   <div class="logo-container d-flex justify-content-center align-items-center" style="padding-top:64px; padding-bottom:8px; background: transparent;">
     <img src="resources/logo.png" alt="Boardgame Group Logo" style="height:260px;width:auto;border-radius:18px;padding:0;box-shadow:0 2px 18px 0 rgba(0,0,0,0.12);background:none;">
   </div>
@@ -267,7 +262,7 @@
     <section id="about" class="bg-white">
       <div class="container">
         <h2 class="mb-4">Milloin & Missä</h2>
-        <p>Kokoontumiset joka <strong>keskiviikko klo 17:30</strong> osoitteessa <strong>Kaarinan pääkirjasto, Lautakunnankatu 1, 20780 Kaarina</strong>.</p>
+        <p>Kokoontumiset joka <strong>keskiviikko klo 17:00</strong> osoitteessa <strong>Kaarinan pääkirjasto, Lautakunnankatu 1, 20780 Kaarina</strong>.</p>
         <p>Kaikki ovat tervetulleita! Tuo omat pelisi tai liity mukaan käynnissä olevaan peliin.</p>
       </div>
     </section>
