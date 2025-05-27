@@ -195,12 +195,17 @@
       transition: color 0.2s;
       vertical-align: middle;
     }
-    .theme-toggle-btn.active,
-    .theme-toggle-btn:active {
-      color: var(--color-navbar-link-bg) !important;
-    }
     .theme-toggle-btn:hover, .theme-toggle-btn:focus {
       color: var(--color-navbar-link-active);
+      /* Match navbar hover color */
+    }
+    .theme-toggle-btn i {
+      border-radius: 50%;
+      padding: 0.18em 0.22em;
+      transition: background 0.25s;
+    }
+    .theme-toggle-btn:hover i, .theme-toggle-btn:focus i {
+      background: var(--color-navbar-link-bg);
     }
     body.light-theme {
       color: #222;
@@ -244,7 +249,7 @@
             </li>
           </ul>
           <button id="theme-toggle" class="theme-toggle-btn" title="Vaihda teema" aria-label="Vaihda teema">
-            <i id="theme-toggle-icon" class="fa-solid fa-sun"></i>
+            <i id="theme-toggle-icon" class="fa-solid fa-moon"></i>
           </button>
         </div>
       </div>
@@ -336,11 +341,11 @@
       const icon = document.getElementById('theme-toggle-icon');
       if (theme === 'light') {
         document.body.classList.add('light-theme');
-        icon.className = 'fa-solid fa-moon';
+        icon.className = 'fa-solid fa-sun';
         btn.classList.add('active');
       } else {
         document.body.classList.remove('light-theme');
-        icon.className = 'fa-solid fa-sun';
+        icon.className = 'fa-solid fa-moon';
         btn.classList.remove('active');
       }
       setCookie('theme', theme, 365);
