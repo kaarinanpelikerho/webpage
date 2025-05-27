@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Boardgame group homepage with meeting info and future events." />
+  <title>Kaarinan pelikerho</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/colors-dark.css">
+  <link rel="stylesheet" href="styles/colors-light.css">
+  <style>
+    /* Remove color variables from here, keep only component styles */
+    html {
+      scroll-behavior: smooth;
+      height: 100%;
+    }
+    body {
+      min-height: 100vh;
+      background: var(--color-bg);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      position: relative;
+      z-index: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light-theme {
+      color: #222;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 60vh;
+      background: linear-gradient(to bottom, rgba(24,24,24,0.7) 0%, rgba(24,24,24,0.5) 40%, var(--color-bg) 100%), url('resources/background.jpg') no-repeat center center/cover;
+      z-index: -1;
+      width: 100vw;
+      pointer-events: none;
+      transition: background 0.3s;
+    }
+    body.light-theme::before {
+      background: linear-gradient(to bottom, rgba(255,136,0,0.12) 0%, rgba(255,136,0,0.08) 40%, var(--color-bg) 100%), url('resources/background.jpg') no-repeat center center/cover;
+    }
+    .hero {
+      background: var(--color-hero-bg);
+      color: var(--color-hero-text);
+      padding: 40px 0 32px 0;
+      text-align: center;
+      border-radius: 0 0 18px 18px;
+      box-shadow: var(--color-hero-shadow);
+      font-family: 'Poppins', Arial, sans-serif;
+      min-height: 32vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero > .container {
+      position: relative;
+      z-index: 1;
+    }
+    @media (max-width: 576px) {
+      body, .page-container, section, .list-group-item, .lead, .hero, .navbar, .navbar-brand, .nav-link {
+        font-size: 1.1rem !important;
+      }
+    }
+    .page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(0,0,0,0.85);
+      border-radius: 18px;
+      box-shadow: 0 0 32px 0 rgba(0,0,0,0.4);
+      padding: 0 0 24px 0;
+      transition: background 0.3s;
+    }
+    body.light-theme .page-container {
+      background: #fffefb;
+      box-shadow: 0 0 32px 0 rgba(255,136,0,0.08);
+    }
+    section {
+      padding: 60px 0;
+    }
+    .navbar {
+      background: var(--color-navbar) !important;
+    }
+    .navbar-brand, .nav-link {
+      color: var(--color-navbar-link) !important;
+      font-weight: bold;
+      border-radius: 18px; /* Always rounded for smooth transition */
+      transition: background 0.25s, border-radius 0.25s;
+    }
+    .navbar-nav .nav-link.active, .navbar-nav .nav-link:focus, .navbar-nav .nav-link:hover {
+      color: var(--color-navbar-link-active) !important;
+      background: var(--color-navbar-link-bg);
+      border-radius: 18px; /* More rounded on hover */
+      transition: background 0.25s, border-radius 0.25s;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--color-primary);
+      font-weight: bold;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    .display-4 {
+      color: #111 !important;
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 700;
+    }
+    .bg-light {
+      background: var(--color-bg-light) !important;
+    }
+    .bg-white {
+      background: var(--color-bg-white) !important;
+    }
+    .list-group-item {
+      background: var(--color-list-bg);
+      color: #fff;
+      border: 1px solid var(--color-list-border);
+    }
+    body.light-theme .list-group-item {
+      color: #222;
+    }
+    .badge.bg-primary {
+      background: var(--color-badge-bg) !important;
+      color: var(--color-badge-text) !important;
+    }
+    a {
+      color: var(--color-link);
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    a:hover, a:focus {
+      color: var(--color-link-hover);
+      text-decoration: underline;
+      text-shadow: 0 0 6px var(--color-link-shadow);
+    }
+    footer {
+      background: var(--color-footer-bg) !important;
+      color: var(--color-footer-text);
+      border-radius: 0 0 18px 18px;
+    }
+    .lead {
+      color: var(--color-lead) !important;
+    }
+    .navbar-toggler {
+      border-color: var(--color-navbar-toggler) !important;
+    }
+    .navbar-toggler-icon {
+      background-image: var(--color-navbar-toggler-icon) !important;
+    }
+    .event-expand-btn {
+      background: none;
+      border: none;
+      color: var(--color-primary);
+      font-size: 1.2em;
+      margin-left: 8px;
+      cursor: pointer;
+      transition: color 0.2s;
+      vertical-align: middle;
+    }
+    .event-expand-btn[aria-expanded="true"] {
+      color: var(--color-navbar-link-active);
+    }
+    body.light-theme .event-expand-btn[aria-expanded="true"] {
+      color: #000;
+    }
+    .event-large-info {
+      margin-top: 0.5em;
+      background: var(--color-event-info-bg);
+      border-radius: 8px;
+      padding: 1em;
+      color: var(--color-event-info-text);
+      border: 1px solid var(--color-event-info-border);
+      animation: fadeIn 0.3s;
+    }
+    body.light-theme .event-large-info {
+      color: #000;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    /* Theme toggle button */
+    .theme-toggle-btn {
+      background: none;
+      border: none;
+      color: var(--color-primary);
+      font-size: 1.5em;
+      margin-left: 1em;
+      cursor: pointer;
+      transition: color 0.2s;
+      vertical-align: middle;
+    }
+    .theme-toggle-btn.active,
+    .theme-toggle-btn:active {
+      color: var(--color-navbar-link-bg) !important;
+    }
+    .theme-toggle-btn:hover, .theme-toggle-btn:focus {
+      color: var(--color-navbar-link-active);
+    }
+    body.light-theme {
+      color: #222;
+    }
+    /* Instagram embed background and border for visibility in light theme */
+    #contact iframe {
+      background: #222;
+      border-radius: 12px;
+      border: 2px solid #ff8800;
+      transition: background 0.3s, border 0.3s;
+    }
+    body.light-theme #contact iframe {
+      background: #fff3e0;
+      border: 2px solid #ff8800;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="logo-container d-flex justify-content-center align-items-center" style="padding-top:64px; padding-bottom:8px; background: transparent;">
+    <img src="resources/logo.png" alt="Boardgame Group Logo" style="height:260px;width:auto;border-radius:18px;padding:0;box-shadow:0 2px 18px 0 rgba(0,0,0,0.12);background:none;">
+  </div>
+  <div class="page-container">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="#">Kaarinan pelikerho</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#about">Tietoa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#events">Tulevat tapahtumat</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Yhteystiedot</a>
+            </li>
+          </ul>
+          <button id="theme-toggle" class="theme-toggle-btn" title="Vaihda teema" aria-label="Vaihda teema">
+            <i id="theme-toggle-icon" class="fa-solid fa-sun"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="container text-center">
+        <h1 class="display-4 mt-3">Tervetuloa Kaarinan pelikerhoon!</h1>
+        <p class="lead"><i class="fa-solid fa-users"></i> Rentoa lautapelaamista joka viikko – liity mukaan!</p>
+      </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="bg-white">
+      <div class="container">
+        <h2 class="mb-4">Milloin & Missä</h2>
+        <p>Kokoontumiset joka <strong>keskiviikko klo 17:30</strong> osoitteessa <strong>Kaarinan pääkirjasto, Lautakunnankatu 1, 20780 Kaarina</strong>.</p>
+        <p>Kaikki ovat tervetulleita! Tuo omat pelisi tai liity mukaan käynnissä olevaan peliin.</p>
+      </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="bg-light">
+      <div class="container">
+        <h2 class="mb-4"><i class="fa-solid fa-calendar-days"></i> Tulevat tapahtumat</h2>
+        <ul class="list-group" id="event-list">
+          <!-- Events will be loaded here by events-loader.js -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-white">
+      <div class="container">
+        <h2 class="mb-4"><i class="fa-solid fa-envelope"></i> Yhteystiedot</h2>
+        <p><i class="fa-brands fa-instagram"></i> Seuraa meitä <a href="https://instagram.com/kaarinan_pelikerho" target="_blank">Instagramissa</a> tai <i class="fa-brands fa-facebook"></i> <a href="https://www.instagram.com/kaarinan_pelikerho">Facebookissa</a> pysyäksesi ajan tasalla.</p>
+        <!-- Instagram Profile Embed -->
+        <div class="d-flex justify-content-center mt-4">
+          <iframe src="https://www.instagram.com/kaarinan_pelikerho/embed" width="340" height="440" frameborder="0" scrolling="no" allowtransparency="true" style="border-radius:12px;background:#222;"></iframe>
+        </div>
+      </div>
+    </section>
+    <!-- Divider -->
+    <div class="d-flex justify-content-center" style="margin:0;">
+      <hr style="width: 100%; border: 1.5px solid #ff8800; border-radius: 2px; opacity: 0.7; margin:0;">
+    </div>
+    <!-- Discord Section -->
+    <section id="discord" class="bg-light" style="padding-top:32px;">
+      <div class="container text-center">
+        <h2 class="mb-4"><i class="fa-brands fa-discord"></i> Liity Discordiin</h2>
+        <p>Keskustele, järjestä pelejä ja pysy yhteydessä yhteisöön!</p>
+        <a href="https://discord.gg/your-invite-link" class="btn btn-primary" style="background:#5865F2;border:none;"><i class="fa-brands fa-discord"></i> Liity Discordiin</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center py-4">
+      <div class="container">
+        <small>&copy; 2025 Kaarinan pelikerho. Kaikki oikeudet pidätetään.</small>
+      </div>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="events-loader.js"></script>
+  <script>
+    // Theme switcher with cookie persistence
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0;i < ca.length;i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+    function setTheme(theme) {
+      const btn = document.getElementById('theme-toggle');
+      const icon = document.getElementById('theme-toggle-icon');
+      if (theme === 'light') {
+        document.body.classList.add('light-theme');
+        icon.className = 'fa-solid fa-moon';
+        btn.classList.add('active');
+      } else {
+        document.body.classList.remove('light-theme');
+        icon.className = 'fa-solid fa-sun';
+        btn.classList.remove('active');
+      }
+      setCookie('theme', theme, 365);
+    }
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+      const isLight = document.body.classList.contains('light-theme');
+      setTheme(isLight ? 'dark' : 'light');
+    });
+    // On load, set theme from cookie
+    (function() {
+      const savedTheme = getCookie('theme');
+      if (savedTheme === 'light') {
+        setTheme('light');
+      } else {
+        setTheme('dark');
+      }
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+:root {
+  --color-bg: #181818;
+  --color-bg-light: rgba(30,30,30,0.95);
+  --color-bg-white: rgba(0,0,0,0.7);
+  --color-primary: #ff8800;
+  --color-primary-dark: #ff5500;
+  --color-navbar: #111;
+  --color-navbar-link: #ff8800;
+  --color-navbar-link-active: #fff;
+  --color-navbar-link-bg: #ff8800;
+  --color-list-bg: rgba(0,0,0,0.5);
+  --color-list-border: #ff8800;
+  --color-badge-bg: #ff8800;
+  --color-badge-text: #111;
+  --color-link: #ff8800;
+  --color-link-hover: #fff;
+  --color-link-shadow: #ff880055;
+  --color-footer-bg: rgba(30,30,30,0.95);
+  --color-footer-text: #ff8800;
+  --color-lead: #111;
+  --color-hero-bg: linear-gradient(90deg, #ff8800 0%, #ff5500 100%);
+  --color-hero-text: #fff;
+  --color-hero-shadow: 0 4px 24px 0 rgba(0,0,0,0.2);
+  --color-hr: #ff8800;
+  --color-event-info-bg: rgba(30,30,30,0.95);
+  --color-event-info-border: #ff8800;
+  --color-event-info-text: #fff;
+  --color-navbar-toggler: #ff8800;
+  --color-navbar-toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,136,0,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}

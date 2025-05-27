@@ -1,0 +1,30 @@
+body.light-theme {
+  --color-bg: #fff8f0;
+  --color-bg-light: #f0f0f0;
+  --color-bg-white: #fffefb;
+  --color-primary: #ff8800;
+  --color-primary-dark: #ff5500;
+  --color-navbar: #fff;
+  --color-navbar-link: #181818;
+  --color-navbar-link-active: #fff;
+  --color-navbar-link-bg: #ff8800;
+  --color-list-bg: #fff3e0;
+  --color-list-border: #ff8800;
+  --color-badge-bg: #ff8800;
+  --color-badge-text: #fff;
+  --color-link: #ff8800;
+  --color-link-hover: #ff5500;
+  --color-link-shadow: #ff880055;
+  --color-footer-bg: #fff3e0;
+  --color-footer-text: #181818;
+  --color-lead: #181818;
+  --color-hero-bg: linear-gradient(90deg, #ff8800 0%, #ffb366 100%);
+  --color-hero-text: #fff;
+  --color-hero-shadow: 0 4px 24px 0 rgba(255,136,0,0.08);
+  --color-hr: #ff8800;
+  --color-event-info-bg: #fff3e0;
+  --color-event-info-border: #ff8800;
+  --color-event-info-text: #ff8800;
+  --color-navbar-toggler: #ff8800;
+  --color-navbar-toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,136,0,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
