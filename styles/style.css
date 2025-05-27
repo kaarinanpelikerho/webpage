@@ -203,3 +203,13 @@ body.light-theme #contact iframe {
 body.light-theme .list-group-item, body.light-theme .event-large-info {
   color: #111 !important;
 }
+/* Info section list item spacing */
+.info-list-item h4, .info-list-item h5, .info-list-item p, .info-list-item strong, .info-list-item br {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
+  line-height: 1.3;
+}
+.info-list-item {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
