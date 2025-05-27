@@ -47,6 +47,7 @@ function parseFrontmatter(md) {
 }
 
 function sanitizeHTML(str) {
+  str = str || ''; // Ensure str is a string
   // Remove <script> tags and their content
   return str.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
             .replace(/<script.*?>/gi, '')
