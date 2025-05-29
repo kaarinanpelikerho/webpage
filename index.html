@@ -35,7 +35,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#about">Tietoa</a>
+              <a class="nav-link" href="#infos">Tietoa</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#events">Tulevat tapahtumat</a>
@@ -55,7 +55,7 @@
     <header class="hero">
       <div class="container text-center">
         <h1 class="display-4 mt-3">Tervetuloa Kaarinan pelikerhoon!</h1>
-        <p class="lead"><i class="fa-solid fa-users"></i> Rentoa lautapelaamista joka viikko – liity mukaan!</p>
+        <p class="lead"><i class="fa-solid fa-dice me-2"></i> Rentoa lautapelaamista joka viikko – liity mukaan!</p>
       </div>
     </header>
 
@@ -93,8 +93,44 @@
         <h2 class="mb-4"><i class="fa-solid fa-envelope"></i> Yhteystiedot</h2>
         <p><i class="fa-brands fa-instagram"></i> Seuraa meitä <a href="https://instagram.com/kaarinan_pelikerho" target="_blank">Instagramissa</a> pysyäksesi ajan tasalla.</p>
         <!-- Instagram Profile Embed -->
-        <div class="d-flex justify-content-center mt-4">
+        <div class="d-flex justify-content-center mt-4 mb-4">
           <iframe src="https://www.instagram.com/kaarinan_pelikerho/embed" width="340" height="440" frameborder="0" scrolling="no" allowtransparency="true" style="border-radius:12px;background:#222;"></iframe>
+        </div>
+
+        <!-- Coordinator Carousel -->
+        <div class="text-center mb-2" style="font-family: 'Poppins', sans-serif; font-weight: 700; color: #ff8800; font-size: 1.25rem; letter-spacing: 0.5px;"><i class="fa-solid fa-users me-2"></i>Tutustu ylläpitäjiin</div>
+        <div id="coordinatorCarousel" class="carousel slide mt-2 mb-4 position-relative" data-bs-ride="carousel" style="max-width: 540px; margin: 0 auto; background: #fffbe6; border-radius: 16px; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07);">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="d-flex align-items-center p-3">
+                <img src="resources/male_portrait.jpg" alt="Koordinaattori" class="rounded" style="width: 110px; height: 110px; object-fit: cover; background: #f8f9fa; box-shadow: 0 1px 8px 0 rgba(0,0,0,0.10);">
+                <div class="ms-4">
+                  <h5 class="mb-1" style="font-family: 'Poppins', sans-serif; color: #ff8800;">Matti Meikäläinen</h5>
+                  <p class="mb-2" style="font-size: 1rem; color: #222;">"Olen pelikerhon perustaja ja pidän erityisesti strategiapeleistä. Tavoitteeni on luoda lämminhenkinen peliyhteisö kaikille!"</p>
+                  <p class="mb-0" style="font-size: 0.95rem; color: #444;"><strong>Lempipelit:</strong> Terraforming Mars, 7 Wonders, Azul</p>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="d-flex align-items-center p-3">
+                <img src="resources/female_portrait.jpg" alt="Koordinaattori" class="rounded" style="width: 110px; height: 110px; object-fit: cover; background: #f8f9fa; box-shadow: 0 1px 8px 0 rgba(0,0,0,0.10);">
+                <div class="ms-4">
+                  <h5 class="mb-1" style="font-family: 'Poppins', sans-serif; color: #ff8800;">Sari Sihteeri</h5>
+                  <p class="mb-2" style="font-size: 1rem; color: #222;">"Pidän yhteistyöpeleistä ja opastan mielelläni uusia pelaajia. Pelikerhossa jokainen löytää paikkansa!"</p>
+                  <p class="mb-0" style="font-size: 0.95rem; color: #444;"><strong>Lempipelit:</strong> Pandemic, Dixit, Wingspan</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Custom Carousel Controls -->
+          <button class="carousel-control-prev custom-carousel-arrow" type="button" data-bs-target="#coordinatorCarousel" data-bs-slide="prev" style="left: -48px; top: 50%; transform: translateY(-50%); background: none; border: none; position: absolute; z-index: 10;">
+            <span style="font-size: 2.2rem; color: #ff8800;"><i class="fa-solid fa-circle-chevron-left"></i></span>
+            <span class="visually-hidden">Edellinen</span>
+          </button>
+          <button class="carousel-control-next custom-carousel-arrow" type="button" data-bs-target="#coordinatorCarousel" data-bs-slide="next" style="right: -48px; top: 50%; transform: translateY(-50%); background: none; border: none; position: absolute; z-index: 10;">
+            <span style="font-size: 2.2rem; color: #ff8800;"><i class="fa-solid fa-circle-chevron-right"></i></span>
+            <span class="visually-hidden">Seuraava</span>
+          </button>
         </div>
       </div>
     </section>

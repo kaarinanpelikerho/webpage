@@ -217,3 +217,62 @@ body.light-theme .list-group-item, body.light-theme .event-large-info {
 body, .page-container, section, .list-group-item, .lead, .hero, .navbar, .navbar-brand, .nav-link, h1, h2, h3, h4, h5, h6, p, .display-4, .event-large-info, .info-list-item, .badge, .footer, .alert, .logo-container, .btn, .discord {
   text-align: center !important;
 }
+/* Coordinator Carousel Responsive Styles */
+#coordinatorCarousel {
+  max-width: 540px;
+  margin: 0 auto;
+  background: #fffbe6;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07);
+  border: 2.5px solid #ff8800;
+}
+#coordinatorCarousel .carousel-control-prev {
+  left: -48px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  position: absolute;
+  z-index: 10;
+}
+#coordinatorCarousel .carousel-control-next {
+  right: -48px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  position: absolute;
+  z-index: 10;
+}
+#coordinatorCarousel .carousel-control-prev span,
+#coordinatorCarousel .carousel-control-next span {
+  font-size: 2.2rem;
+  color: #ff8800;
+}
+@media (max-width: 700px) {
+  #coordinatorCarousel {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  #coordinatorCarousel .carousel-control-prev {
+    left: 0 !important;
+  }
+  #coordinatorCarousel .carousel-control-next {
+    right: 0 !important;
+  }
+}
+@media (max-width: 500px) {
+  #coordinatorCarousel .carousel-inner {
+    flex-direction: column;
+  }
+  #coordinatorCarousel .d-flex.align-items-center {
+    flex-direction: column;
+    text-align: center;
+  }
+  #coordinatorCarousel img {
+    margin-bottom: 12px;
+  }
+  #coordinatorCarousel .ms-4 {
+    margin-left: 0 !important;
+  }
+}
