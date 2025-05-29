@@ -213,3 +213,7 @@ body.light-theme .list-group-item, body.light-theme .event-large-info {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+/* Center only text, not layout */
+body, .page-container, section, .list-group-item, .lead, .hero, .navbar, .navbar-brand, .nav-link, h1, h2, h3, h4, h5, h6, p, .display-4, .event-large-info, .info-list-item, .badge, .footer, .alert, .logo-container, .btn, .discord {
+  text-align: center !important;
+}

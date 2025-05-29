@@ -43,9 +43,12 @@ function renderInfos(infos) {
   infos.forEach((info, idx) => {
     const li = document.createElement('li');
     li.className = 'list-group-item info-list-item d-flex flex-column flex-md-row justify-content-between align-items-md-center';
+    const flexDiv = document.createElement('div');
+    flexDiv.style.flex = 'auto';
     const left = document.createElement('span');
     left.innerHTML = `<strong>${sanitizeHTML(info.title)}</strong><br><small>${sanitizeHTML(info.body)}</small>`;
-    li.appendChild(left);
+    flexDiv.appendChild(left);
+    li.appendChild(flexDiv);
     ul.appendChild(li);
   });
 }

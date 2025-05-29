@@ -61,8 +61,16 @@ function renderEvents(events) {
   events.forEach((ev, idx) => {
     const li = document.createElement('li');
     li.className = 'list-group-item d-flex flex-column flex-md-row justify-content-between align-items-md-center';
+    // Add empty element for left alignment
+    const emptyLeft = document.createElement('span');
+    emptyLeft.className = 'd-none d-md-inline-block';
+    emptyLeft.style.width = '9em' // Match badge+button width if expand exists
+    li.appendChild(emptyLeft);
+    const flexDiv = document.createElement('div');
+    flexDiv.style.flex = 'auto';
     const left = document.createElement('span');
     left.innerHTML = `<strong>${sanitizeHTML(ev.title)}</strong><br><small>${sanitizeHTML(ev.small_info || ev.desc)}</small>`;
+    flexDiv.appendChild(left);
     const right = document.createElement('span');
     right.className = 'd-flex align-items-center';
     right.innerHTML = `<span class="badge bg-primary rounded-pill" style="${ev.large_info ? '' : 'margin-right:2.75em;'}">${sanitizeHTML(ev.dateFormatted)}</span>`;
@@ -91,7 +99,7 @@ function renderEvents(events) {
       // Show large_info as sanitized HTML, preserving line breaks
       largeInfoDiv.innerHTML = sanitizeHTML(ev.large_info).replace(/\n/g, '<br>');
     }
-    li.appendChild(left);
+    li.appendChild(flexDiv);
     li.appendChild(right);
     if (largeInfoDiv) left.appendChild(largeInfoDiv); // Attach under small info
     ul.appendChild(li);
