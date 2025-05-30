@@ -31,6 +31,13 @@ body.light-theme {
   --color-event-info-text: #e06a00;
   --color-navbar-toggler: #e06a00;
   --color-navbar-toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(224,106,0,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  --color-carousel-bg: #fffbe6;
+  --color-carousel-border: #e06a00;
+  --color-carousel-arrow: #e06a00;
+  --color-carousel-item-bg: #fffbe6;
+  --color-carousel-item-text: #222;
+  --color-carousel-item-title: #e06a00;
+  --color-carousel-title: #e06a00;
 }
 body.light-theme #contact iframe {
   background: #fff3e0;

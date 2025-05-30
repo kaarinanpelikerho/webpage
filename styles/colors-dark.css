@@ -27,6 +27,13 @@
   --color-event-info-text: #fff;
   --color-navbar-toggler: #ff8800;
   --color-navbar-toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,136,0,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  --color-carousel-bg: #222;
+  --color-carousel-border: #ff8800;
+  --color-carousel-arrow: #ff8800;
+  --color-carousel-item-bg: #222;
+  --color-carousel-item-text: #fff;
+  --color-carousel-item-title: #fff;
+  --color-carousel-title: #ff8800;
 }
 /* Instagram embed background and border for dark theme */
 #contact iframe {

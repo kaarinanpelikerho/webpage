@@ -83,6 +83,9 @@ section {
   border-radius: 18px;
   transition: background 0.25s, border-radius 0.25s;
 }
+body.light-theme .navbar, body.light-theme .navbar-brand, body.light-theme .nav-link {
+  color: var(--color-navbar-link-bg) !important;
+}
 .navbar-nav .nav-link.active, .navbar-nav .nav-link:focus, .navbar-nav .nav-link:hover {
   color: var(--color-navbar-link-active) !important;
   background: var(--color-navbar-link-bg);
@@ -221,10 +224,10 @@ body, .page-container, section, .list-group-item, .lead, .hero, .navbar, .navbar
 #coordinatorCarousel {
   max-width: 540px;
   margin: 0 auto;
-  background: #fffbe6;
+  background: var(--color-carousel-bg);
   border-radius: 16px;
   box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07);
-  border: 2.5px solid #ff8800;
+  border: 2.5px solid var(--color-carousel-border);
 }
 #coordinatorCarousel .carousel-control-prev {
   left: -48px;
@@ -247,7 +250,7 @@ body, .page-container, section, .list-group-item, .lead, .hero, .navbar, .navbar
 #coordinatorCarousel .carousel-control-prev span,
 #coordinatorCarousel .carousel-control-next span {
   font-size: 2.2rem;
-  color: #ff8800;
+  color: var(--color-carousel-arrow);
 }
 @media (max-width: 700px) {
   #coordinatorCarousel {
@@ -275,4 +278,23 @@ body, .page-container, section, .list-group-item, .lead, .hero, .navbar, .navbar
   #coordinatorCarousel .ms-4 {
     margin-left: 0 !important;
   }
+}
+#coordinatorCarousel .carousel-item {
+  background: var(--color-carousel-item-bg);
+  color: var(--color-carousel-item-text);
+  border-radius: 14px;
+  box-shadow: 0 1px 8px 0 rgba(0,0,0,0.10);
+}
+#coordinatorCarousel .carousel-item,
+#coordinatorCarousel .carousel-item *,
+#coordinatorCarousel .carousel-item h5,
+#coordinatorCarousel .carousel-item p {
+  color: var(--color-carousel-item-text) !important;
+}
+#coordinatorCarousel .carousel-item h5 {
+  color: var(--color-carousel-title) !important;
+}
+#coordinatorCarousel .carousel-inner {
+  background: var(--color-carousel-item-bg);
+  border-radius: 14px;
 }
