@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Boardgame group homepage with meeting info and future events." />
+  <title>Kaarinan pelikerho</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/colors-dark.css">
+  <link rel="stylesheet" href="styles/colors-light.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="icon" href="favicon.ico?" type="image/x-icon">
+</head>
+
+<body>
+  <!-- Disclaimer: Work in progress -->
+  <div class="alert alert-warning text-center mb-0 w-100" style="border-radius:0; position:fixed; top:0; left:0; width:100%; z-index:2000;">
+    <strong>Huom!</strong> Tämä sivu on työn alla. Älä luota vielä sivun tietoihin.
+  </div>
+  <div class="logo-container d-flex justify-content-center align-items-center" style="padding-top:64px; padding-bottom:8px; background: transparent;">
+    <img src="resources/logo.png" alt="Boardgame Group Logo" style="height:260px;width:auto;border-radius:18px;padding:0;box-shadow:0 2px 18px 0 rgba(0,0,0,0.12);background:none;">
+  </div>
+  <div class="page-container">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Kaarinan pelikerho</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+          <button id="theme-toggle" class="theme-toggle-btn" title="Vaihda teema" aria-label="Vaihda teema">
+            <i id="theme-toggle-icon" class="fa-solid fa-moon"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero-slim">
+      <div class="container text-center">
+        <h1 class="display-4 mt-3"><i class="fa-solid fa-dice me-2"></i> Pelikokoelma!</h1>
+      </div>
+    </header>
+
+    <section id="games-list" class="bg-light">
+      <div class="container">
+        <div class="mb-3 text-center games-info-text" style="max-width:700px;margin-left:auto;margin-right:auto;">
+          Voit tuoda kerholle omia pelejäsi tai pelata kerholla olevia pelejä. Pelit vaihtuvat viikoittain! Tällä hetkellä pelattavana ainakin seuraavat pelit:
+        </div>
+        <!-- Spinner for loading games -->
+        <div id="games-spinner" class="text-center my-4" style="display:none;">
+          <div class="spinner-border text-warning" role="status" style="width:3rem;height:3rem;">
+            <span class="visually-hidden">Ladataan pelejä...</span>
+          </div>
+          <div class="mt-2">Ladataan pelejä...</div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped align-middle">
+            <thead id="games-table-head">
+              <tr>
+                <th scope="col">Pelin nimi</th>
+              </tr>
+            </thead>
+            <tbody id="games-table-body">
+              <!-- Pelit ladataan dynaamisesti -->
+            </tbody>
+          </table>
+        </div>
+        <div class="text-center mt-2 mb-0" style="font-size:0.98em;">
+          (X) = palautettava 4.6.<br>(Y) = palautettava 11.6
+        </div>
+      </div>
+    </section>
+    <!-- Divider -->
+    <div class="d-flex justify-content-center" style="margin:0;">
+      <hr style="width: 100%; border: 1.5px solid #ff8800; border-radius: 2px; opacity: 0.7; margin:0;">
+    </div>
+    <!-- Discord Section -->
+    <section id="discord" class="bg-light" style="padding-top:32px;">
+      <div class="container text-center">
+        <h2 class="mb-4"><i class="fa-brands fa-discord"></i> Liity Discordiin</h2>
+        <p>Keskustele, järjestä pelejä ja pysy yhteydessä yhteisöön!</p>
+        <a href="https://discord.gg/xbykjBw9nM" class="btn btn-primary" style="background:#5865F2;border:none;"><i class="fa-brands fa-discord"></i> Liity Discordiin</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center py-4">
+      <div class="container">
+        <small>&copy; 2025 Kaarinan pelikerho. Kaikki oikeudet pidätetään.</small>
+      </div>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="events-loader.js"></script>
+  <script src="infos-loader.js"></script>
+  <script>
+    // Theme switcher with cookie persistence
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0;i < ca.length;i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+    function setTheme(theme) {
+      const btn = document.getElementById('theme-toggle');
+      const icon = document.getElementById('theme-toggle-icon');
+      if (theme === 'light') {
+        document.body.classList.add('light-theme');
+        icon.className = 'fa-solid fa-sun';
+        btn.classList.add('active');
+      } else {
+        document.body.classList.remove('light-theme');
+        icon.className = 'fa-solid fa-moon';
+        btn.classList.remove('active');
+      }
+      setCookie('theme', theme, 365);
+    }
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+      const isLight = document.body.classList.contains('light-theme');
+      setTheme(isLight ? 'dark' : 'light');
+    });
+    // On load, set theme from cookie
+    (function() {
+      const savedTheme = getCookie('theme');
+      if (savedTheme === 'light') {
+        setTheme('light');
+      } else {
+        setTheme('dark');
+      }
+    })();
+
+    // --- Games table fetcher ---
+    const gamesSpinner = document.getElementById('games-spinner');
+    const gamesTableBody = document.getElementById('games-table-body');
+    const gamesTableHead = document.getElementById('games-table-head');
+    function showGamesSpinner(show) {
+      if (gamesSpinner) gamesSpinner.style.display = show ? '' : 'none';
+      if (gamesTableHead) gamesTableHead.style.display = show ? 'none' : '';
+    }
+    async function fetchGames() {
+      showGamesSpinner(true);
+      try {
+        const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTEqh3AXy5wfnz9udexRIlkzDoTzeXbkqoWeovNLA-UHSn9TQJQHYREALXVYQHDWaDdNuyA9nn9w2BH/pub?gid=0&single=true&output=csv';
+        const res = await fetch(url);
+        const csv = await res.text();
+        // Parse CSV
+        const lines = csv.split(/\r?\n/).filter(line => line.trim() !== '');
+        let games = [];
+        for (let i = 1; i < lines.length; i++) { // skip header
+          const cells = lines[i].split(',');
+          if (cells.length >= 1) {
+            const peli = cells[0].replace(/^"|"$/g, '').trim();
+            if (peli) games.push({ peli });
+          }
+        }
+        // Populate table
+        gamesTableBody.innerHTML = '';
+        games.forEach(game => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${game.peli}</td>`;
+          gamesTableBody.appendChild(tr);
+        });
+      } catch (e) {
+        gamesTableBody.innerHTML = `<tr><td>Virhe ladattaessa pelejä: ${e.message}</td></tr>`;
+      } finally {
+        showGamesSpinner(false);
+      }
+    }
+    fetchGames();
+  </script>
+</body>
+
+</html>

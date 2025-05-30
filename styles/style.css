@@ -42,6 +42,21 @@ body.light-theme::before {
   position: relative;
   z-index: 1;
 }
+.hero-slim {
+  background: var(--color-hero-bg);
+  color: var(--color-hero-text);
+  padding: 18px 0 10px 0;
+  text-align: center;
+  border-radius: 0 0 18px 18px;
+  box-shadow: var(--color-hero-shadow);
+  font-family: 'Poppins', Arial, sans-serif;
+  min-height: 14vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
 .hero > .container {
   position: relative;
   z-index: 1;
@@ -297,4 +312,56 @@ body, .page-container, section, .list-group-item, .lead, .hero, .navbar, .navbar
 #coordinatorCarousel .carousel-inner {
   background: var(--color-carousel-item-bg);
   border-radius: 14px;
+}
+/* Table theme styles */
+.table {
+  border: 2px solid var(--color-list-border) !important;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.table, .table-striped, .table thead th, .table td, .table th {
+  background: var(--color-bg-light) !important;
+  color: var(--color-event-info-text) !important;
+  border-color: var(--color-list-border) !important;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background: rgba(255,136,0,0.07) !important;
+}
+.table thead th {
+  background: var(--color-primary) !important;
+  color: #111 !important;
+  border-bottom: 2px solid var(--color-list-border) !important;
+  font-size: 1.18em;
+}
+body.light-theme .table {
+  border: 2px solid var(--color-list-border) !important;
+}
+body.light-theme .table, body.light-theme .table-striped, body.light-theme .table thead th, body.light-theme .table td, body.light-theme .table th {
+  background: var(--color-bg-white) !important;
+  color: var(--color-event-info-text) !important;
+  border-color: var(--color-list-border) !important;
+}
+body.light-theme .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background: rgba(224,106,0,0.07) !important;
+}
+body.light-theme .table thead th {
+  background: var(--color-primary) !important;
+  color: #111 !important;
+  border-bottom: 2px solid var(--color-list-border) !important;
+  font-size: 1.18em;
+}
+body.light-theme .table td, body.light-theme .table th {
+  color: #111 !important;
+}
+#games-list {
+  padding-top: 12px;
+}
+#games-list .table-responsive {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.games-info-text {
+  margin-top: 18px;
+  margin-bottom: 24px !important;
 }

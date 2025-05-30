@@ -43,3 +43,6 @@ body.light-theme #contact iframe {
   background: #fff3e0;
   border: 2px solid #e06a00;
 }
+body.light-theme .games-info-text {
+  color: #111;
+}
