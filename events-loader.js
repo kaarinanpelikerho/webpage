@@ -14,7 +14,7 @@ async function fetchEventSheet() {
     let [date, title, small_info, ...large_info] = cols;
     large_info = large_info.join(',').replace(/^"|"$/g, '');
     // Treat large_info with only commas (empty/meaningless) as no large_info
-    const cleaned_large_info = large_info ? large_info.trim() : '';
+    const cleaned_large_info = large_info.replace(/;/g, ',') ? large_info.replace(/;/g, ',').trim() : '';
     const hasLargeInfo = cleaned_large_info.replace(/,/g, '').trim().length > 0;
     data.push({
       date: date ? date.trim() : '',
