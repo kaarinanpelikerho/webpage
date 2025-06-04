@@ -1,6 +1,3 @@
-// events-loader.js
-// Loads and sanitizes event data from Google Sheets CSV and injects events into the events section
-
 const EVENTS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVTtNvzAPWE7ng3OR1Bp2nUhgYO3IsvfaLoYH3RPCEIXqy0DPT1xe1uIkwcjDXu_LspPs3TFFhi7HG/pub?gid=0&single=true&output=csv';
 
 async function fetchEventSheet() {
@@ -37,6 +34,19 @@ function sanitizeHTML(str) {
             .replace(/<\/script>/gi, '');
 }
 
+function parseCustomLinks(str) {
+  // Replace link='img:resourceName,text:ShownText,' with clickable link
+  return (str || '').replace(/link=["']{1,2}img:([^,]+),text:([^,"']+)[,"']{1,2}/g, function(match, resourceName, shownText) {
+    // Remove any surrounding quotes from resourceName and shownText
+    resourceName = resourceName.replace(/^"|"$/g, '');
+    shownText = shownText.replace(/^"|"$/g, '');
+    // Remove quotes from start/end of shownText again (in case CSV double-quotes)
+    shownText = shownText.replace(/^['"]+|['"]+$/g, '');
+    const url = `resources/${resourceName}`;
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${sanitizeHTML(shownText)}</a>`;
+  });
+}
+
 function renderEvents(events) {
   const ul = document.createElement('ul');
   ul.className = 'list-group';
@@ -52,7 +62,9 @@ function renderEvents(events) {
     const flexDiv = document.createElement('div');
     flexDiv.style.flex = 'auto';
     const left = document.createElement('span');
-    left.innerHTML = `<strong>${sanitizeHTML(ev.title)}</strong><br><small>${sanitizeHTML(ev.small_info || ev.desc)}</small>`;
+    // Parse custom links in small_info/desc
+    console.log(ev.small_info)
+    left.innerHTML = `<strong>${sanitizeHTML(ev.title)}</strong><br><small>${parseCustomLinks(sanitizeHTML(ev.small_info || ev.desc))}</small>`;
     flexDiv.appendChild(left);
     const right = document.createElement('span');
     right.className = 'd-flex align-items-center';
@@ -79,8 +91,8 @@ function renderEvents(events) {
       largeInfoDiv.id = `event-large-info-${idx}`;
       largeInfoDiv.style.display = 'none';
       largeInfoDiv.style.marginRight = '0.75em'; // Add margin between large info and date field
-      // Show large_info as sanitized HTML, preserving line breaks
-      largeInfoDiv.innerHTML = sanitizeHTML(ev.large_info).replace(/\n/g, '<br>');
+      // Show large_info as sanitized HTML, preserving line breaks and parsing custom links
+      largeInfoDiv.innerHTML = parseCustomLinks(sanitizeHTML(ev.large_info)).replace(/\n/g, '<br>');
     }
     li.appendChild(flexDiv);
     li.appendChild(right);
@@ -94,6 +106,18 @@ function formatDate(dateStr) {
   const d = new Date(dateStr);
   if (isNaN(d)) return dateStr;
   return d.toLocaleDateString('fi-FI', { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+function parseFinnishDate(dateStr) {
+  // Expects DD.M.YYYY or D.M.YYYY
+  if (!dateStr) return null;
+  const parts = dateStr.split('.');
+  if (parts.length < 3) return null;
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1; // JS months are 0-based
+  const year = parseInt(parts[2], 10);
+  if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+  return new Date(year, month, day);
 }
 
 async function loadEvents() {
@@ -112,25 +136,63 @@ async function loadEvents() {
       </div>
       <div class="mt-2">Ladataan tapahtumia...</div>
     `;
-    eventsSection.insertBefore(spinner, eventsSection.firstChild.nextSibling); // after h2
+    // Insert spinner after the h2 header
+    const h2 = eventsSection.querySelector('h2');
+    if (h2 && h2.nextSibling) {
+      eventsSection.insertBefore(spinner, h2.nextSibling);
+    } else {
+      eventsSection.appendChild(spinner);
+    }
   }
   // Hide list, show spinner
   let oldList = eventsSection.querySelector('ul.list-group');
   if (oldList) oldList.style.display = 'none';
   spinner.style.display = '';
   // Fetch and render events
-  const events = (await fetchEventSheet()).map(ev => ({
-    title: ev.title || 'Tapahtuma',
-    date: ev.date || '',
-    dateFormatted: formatDate(ev.date),
-    small_info: ev.small_info || '',
-    large_info: ev.large_info || '',
-    desc: ''
-  }));
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const events = (await fetchEventSheet())
+    .map(ev => ({
+      title: ev.title || 'Tapahtuma',
+      date: ev.date || '',
+      dateFormatted: formatDate(ev.date),
+      small_info: ev.small_info || '',
+      large_info: ev.large_info || '',
+      desc: ''
+    }))
+    .filter(ev => {
+      // Only show events with a valid date in the future or today (DD.M.YYYY)
+      const eventDate = parseFinnishDate(ev.date);
+      return ev.date && eventDate && eventDate >= today;
+    })
+    .sort((a, b) => {
+      const dateA = parseFinnishDate(a.date);
+      const dateB = parseFinnishDate(b.date);
+      return dateA - dateB;
+    });
   // Remove old list if present
   if (oldList) oldList.remove();
-  eventsSection.appendChild(renderEvents(events));
-  // Hide spinner, show list
+  const h2 = eventsSection.querySelector('h2');
+  if (events.length === 0) {
+    // Show message if no upcoming events
+    const noEventsMsg = document.createElement('div');
+    noEventsMsg.className = 'text-center my-4';
+    noEventsMsg.textContent = 'Ei tulevia tapahtumia';
+    if (h2 && h2.nextSibling) {
+      eventsSection.insertBefore(noEventsMsg, h2.nextSibling);
+    } else {
+      eventsSection.appendChild(noEventsMsg);
+    }
+  } else {
+    // Insert event list after the h2 header
+    const eventList = renderEvents(events);
+    if (h2 && h2.nextSibling) {
+      eventsSection.insertBefore(eventList, h2.nextSibling);
+    } else {
+      eventsSection.appendChild(eventList);
+    }
+  }
+  // Hide spinner, show list or message
   spinner.style.display = 'none';
 }
 
