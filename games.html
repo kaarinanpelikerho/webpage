@@ -72,8 +72,8 @@
             </tbody>
           </table>
         </div>
-        <div class="text-center mt-2 mb-0" style="font-size:0.98em;">
-          (X) = palautettava 4.6.<br>(Y) = palautettava 11.6
+        <div class="text-center mt-2 mb-0" style="font-size:0.98em;" id="games-info-dynamic">
+          <!-- Info from sheet will be loaded here -->
         </div>
       </div>
     </section>
@@ -160,28 +160,46 @@
     async function fetchGames() {
       showGamesSpinner(true);
       try {
-        const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTEqh3AXy5wfnz9udexRIlkzDoTzeXbkqoWeovNLA-UHSn9TQJQHYREALXVYQHDWaDdNuyA9nn9w2BH/pub?gid=0&single=true&output=csv';
+        const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZ2aZFKftKfOucSraLs98jBXmrYjdPTRzKs2L7tDgRLAkI2H0kLRc-NMxQKemHzxNMw4S6gw7deSng/pub?gid=0&single=true&output=csv';
         const res = await fetch(url);
         const csv = await res.text();
         // Parse CSV
         const lines = csv.split(/\r?\n/).filter(line => line.trim() !== '');
         let games = [];
+        let infoTexts = [];
         for (let i = 1; i < lines.length; i++) { // skip header
           const cells = lines[i].split(',');
           if (cells.length >= 1) {
             const peli = cells[0].replace(/^"|"$/g, '').trim();
             if (peli) games.push({ peli });
+            if (cells.length > 1) {
+              const info = cells[1].replace(/^"|"$/g, '').trim();
+              if (info) infoTexts.push(info);
+            }
           }
         }
         // Populate table
         gamesTableBody.innerHTML = '';
         games.forEach(game => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `<td>${game.peli}</td>`;
-          gamesTableBody.appendChild(tr);
+          if (game.peli.toUpperCase().includes('VANHAT:') || game.peli.toUpperCase().includes('UUDET:')) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<th colspan="1" class="table-category-header">${game.peli}</th>`;
+            gamesTableBody.appendChild(tr);
+          } else {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${game.peli}</td>`;
+            gamesTableBody.appendChild(tr);
+          }
         });
+        // Show info texts
+        const infoDiv = document.getElementById('games-info-dynamic');
+        if (infoDiv) {
+          infoDiv.innerHTML = infoTexts.join('<br>');
+        }
       } catch (e) {
         gamesTableBody.innerHTML = `<tr><td>Virhe ladattaessa pelejä: ${e.message}</td></tr>`;
+        const infoDiv = document.getElementById('games-info-dynamic');
+        if (infoDiv) infoDiv.innerHTML = '';
       } finally {
         showGamesSpinner(false);
       }
