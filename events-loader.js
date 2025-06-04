@@ -63,7 +63,6 @@ function renderEvents(events) {
     flexDiv.style.flex = 'auto';
     const left = document.createElement('span');
     // Parse custom links in small_info/desc
-    console.log(ev.small_info)
     left.innerHTML = `<strong>${sanitizeHTML(ev.title)}</strong><br><small>${parseCustomLinks(sanitizeHTML(ev.small_info || ev.desc))}</small>`;
     flexDiv.appendChild(left);
     const right = document.createElement('span');
