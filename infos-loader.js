@@ -1,6 +1,3 @@
-// Loads info data from a Google Sheets CSV and displays them in the #info-list element
-// Similar to events-loader.js but for infos
-
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVTtNvzAPWE7ng3OR1Bp2nUhgYO3IsvfaLoYH3RPCEIXqy0DPT1xe1uIkwcjDXu_LspPs3TFFhi7HG/pub?gid=379856739&single=true&output=csv';
 
 async function fetchInfoRows() {
