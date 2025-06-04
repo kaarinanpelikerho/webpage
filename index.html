@@ -79,6 +79,54 @@
         <p>Kaikki ovat tervetulleita! Tuo omat pelisi tai pelaa <a href="games">pelivalikoimassa</a> olevia pelejä.</p>
       </div>
     </section>
+    
+    <!-- Kuukauden teema section -->
+    <section id="theme-of-the-month" class="bg-light" style="padding-top:32px; padding-bottom:32px;">
+      <div class="container" style="max-width:700px; margin:auto;">
+        <h2 class="mb-4 text-center" style="font-weight:700; font-family:'Poppins',sans-serif; font-size:2.1rem;">
+          <i class="fa-solid fa-puzzle-piece"></i> Kuukauden teema
+        </h2>
+        <div class="row align-items-start justify-content-center flex-md-row flex-column text-center text-md-start">
+          <div class="col-12 col-md-5 mb-3 mb-md-0 d-flex justify-content-center">
+            <a href="resources/game_theme.png" target="_blank" rel="noopener" style="display:inline-block;">
+              <img src="resources/game_theme.png" alt="Kuukauden teema" class="theme-poster" style="width:100%; max-width:320px; border-radius:18px; box-shadow:0 2px 18px 0 rgba(0,0,0,0.13); transition:transform 0.18s, box-shadow 0.18s; cursor:pointer;">
+            </a>
+          </div>
+          <div class="col-12 col-md-7 d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
+            <div class="theme-desc" id="theme-desc" style="font-size:1.08em; margin-top:0; max-width:420px;">
+              <div id="theme-desc-preview">
+                <strong>Haastekisan tavoite:</strong><br>
+                Pidetään hauskaa yhdessä pelaillen.<br>
+                <span class="d-none d-sm-inline">Tutustutaan kerholaisten omiin suosikkipeleihin.<br>Tutustutaan uusiin pelaajiin.</span>
+                <span class="d-sm-none">...<br></span>
+              </div>
+              <div id="theme-desc-full" style="display:none;">
+                <strong>Haastekisan tavoite:</strong><br>
+                Pidetään hauskaa yhdessä pelaillen.<br>
+                Tutustutaan kerholaisten omiin suosikkipeleihin.<br>
+                Tutustutaan uusiin pelaajiin.<br><br>
+                <strong>Kuinka voin osallistua?</strong><br>
+                Toteuta haasteita yksin tai yhdessä kerhon kanssa.<br>
+                Yksin: Nappaa haasteet talteen ja pidä kirjaa keräämistäsi pisteistä.<br>
+                Yhdessä: Käytetään yhteistä pistekirjanpitoa.<br><br>
+                <strong>Haasteiden teemat:</strong><br>
+                Teemat julkaistaan ke 28.8. kerhon synttäreillä.<br>
+                Joka kuukaudelle on oma teemansa, johon liittyvän tehtävän suorittamiseen on aikaa seuraavan haasteen alkuun asti.<br><br>
+                <strong>Haastekisan päättyminen ja pisteytys:</strong><br>
+                Pisteiden keruu kestää koko vuoden, haastekisa päättyy keskiviikkona 27.8.2025.<br><br>
+                <strong>Pisteiden keruu:</strong><br>
+                3p Pelaa teeman mukaista peliä uuden tyypin kanssa tai opeta muille sen säännöt.<br>
+                2p Pelaa teeman mukaista peliä.<br>
+                1p Vinkkaa teemaan sopiva peli muille etukäteen tai viimeistään teemakuukauden aikana
+                TAI
+                tuo paikalle vähintään yksi oma peli, joka sopii kuukauden teemaan.
+              </div>
+              <button id="theme-desc-toggle" class="btn btn-link p-0 mt-2" style="font-size:0.98em; color:#ff8800; text-decoration:underline;">Näytä lisää</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Events Section -->
     <section id="events" class="bg-light">
@@ -208,6 +256,27 @@
         setTheme('dark');
       }
     })();
+    // Kuukauden teema - expand/collapse
+    document.addEventListener('DOMContentLoaded', function() {
+      var btn = document.getElementById('theme-desc-toggle');
+      var preview = document.getElementById('theme-desc-preview');
+      var full = document.getElementById('theme-desc-full');
+      var expanded = false;
+      if (btn && preview && full) {
+        btn.addEventListener('click', function() {
+          expanded = !expanded;
+          if (expanded) {
+            preview.style.display = 'none';
+            full.style.display = '';
+            btn.textContent = 'Näytä vähemmän';
+          } else {
+            preview.style.display = '';
+            full.style.display = 'none';
+            btn.textContent = 'Näytä lisää';
+          }
+        });
+      }
+    });
   </script>
 </body>
 

@@ -181,13 +181,19 @@
         // Populate table
         gamesTableBody.innerHTML = '';
         games.forEach(game => {
+          let peliName = game.peli;
+          if (peliName.toUpperCase().includes('VANHAT:')) {
+            peliName = 'Jo edellisenä viikolla kerhossa pelattavana olleet:';
+          } else if (peliName.toUpperCase().includes('UUDET:')) {
+            peliName = 'Saapuneet uudet varaukset, jotka pelattavissa:';
+          }
           if (game.peli.toUpperCase().includes('VANHAT:') || game.peli.toUpperCase().includes('UUDET:')) {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<th colspan="1" class="table-category-header">${game.peli}</th>`;
+            tr.innerHTML = `<th colspan="1" class="table-category-header">${peliName}</th>`;
             gamesTableBody.appendChild(tr);
           } else {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${game.peli}</td>`;
+            tr.innerHTML = `<td>${peliName}</td>`;
             gamesTableBody.appendChild(tr);
           }
         });
