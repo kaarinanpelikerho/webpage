@@ -1,48 +1,31 @@
 // events-loader.js
-// Loads and sanitizes event .md files, parses frontmatter, and injects events into the events section
+// Loads and sanitizes event data from Google Sheets CSV and injects events into the events section
 
-async function fetchEventFiles() {
-  // List of event files (hardcoded for static site)
-  const files = [
-    'events/2025-05-30-terraforming-mars.md',
-    'events/2025-06-06-magic-draft.md',
-    'events/2025-06-13-wingspan.md',
-  ];
-  return Promise.all(files.map(f => fetch(f).then(r => r.text()).then(text => ({ file: f, text }))));
-}
+const EVENTS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVTtNvzAPWE7ng3OR1Bp2nUhgYO3IsvfaLoYH3RPCEIXqy0DPT1xe1uIkwcjDXu_LspPs3TFFhi7HG/pub?gid=0&single=true&output=csv';
 
-function parseFrontmatter(md) {
-  const match = md.match(/^---([\s\S]*?)---/);
-  if (!match) return {};
-  const lines = match[1].split('\n');
-  const data = {};
-  let currentKey = null;
-  let currentValue = [];
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    // Multiline YAML block (|)
-    if (/^\s*([\w_]+):\s*\|\s*$/.test(line)) {
-      if (currentKey) data[currentKey] = currentValue.join('\n').replace(/^\n+|\n+$/g, '');
-      const key = line.match(/^\s*([\w_]+):/)[1];
-      currentKey = key;
-      currentValue = [];
-      // Read indented block
-      i++;
-      while (i < lines.length && (/^\s{2,}.+/.test(lines[i]) || lines[i].trim() === '')) {
-        currentValue.push(lines[i].replace(/^\s{2}/, ''));
-        i++;
-      }
-      i--; // step back for next loop
-    } else if (/^\s*([\w_]+):/.test(line)) {
-      if (currentKey) data[currentKey] = currentValue.join('\n').replace(/^\n+|\n+$/g, '');
-      const [key, ...rest] = line.split(':');
-      currentKey = key.trim();
-      currentValue = [rest.join(':').trim()];
-    } else if (currentKey) {
-      currentValue.push(line);
-    }
+async function fetchEventSheet() {
+  const resp = await fetch(EVENTS_CSV_URL);
+  const text = await resp.text();
+  // Parse CSV (simple, no quoted commas supported)
+  const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
+  // Assume first line is header, skip it
+  const data = [];
+  for (let i = 1; i < lines.length; i++) {
+    let cols = lines[i].split(',');
+    // Remove column F (index 5) and everything after it
+    if (cols.length > 5) cols = cols.slice(0, 5);
+    let [date, title, small_info, ...large_info] = cols;
+    large_info = large_info.join(',').replace(/^"|"$/g, '');
+    // Treat large_info with only commas (empty/meaningless) as no large_info
+    const cleaned_large_info = large_info ? large_info.trim() : '';
+    const hasLargeInfo = cleaned_large_info.replace(/,/g, '').trim().length > 0;
+    data.push({
+      date: date ? date.trim() : '',
+      title: title ? title.trim() : '',
+      small_info: small_info ? small_info.trim().replace(/;/g, ',') : '',
+      large_info: hasLargeInfo ? cleaned_large_info : ''
+    });
   }
-  if (currentKey) data[currentKey] = currentValue.join('\n').replace(/^\n+|\n+$/g, '');
   return data;
 }
 
@@ -114,26 +97,41 @@ function formatDate(dateStr) {
 }
 
 async function loadEvents() {
-  const files = await fetchEventFiles();
-  const events = files.map(f => {
-    const fm = parseFrontmatter(f.text);
-    // Support new fields: small_info, large_info
-    return {
-      title: fm.title || 'Tapahtuma',
-      date: fm.date || '',
-      dateFormatted: formatDate(fm.date),
-      small_info: fm.small_info || '',
-      large_info: fm.large_info || '',
-      desc: f.text.replace(/^---([\s\S]*?)---/, '').trim()
-    };
-  });
   const eventsSection = document.querySelector('#events .container');
-  if (eventsSection) {
-    // Remove old list if present
-    const oldList = eventsSection.querySelector('ul.list-group');
-    if (oldList) oldList.remove();
-    eventsSection.appendChild(renderEvents(events));
+  if (!eventsSection) return;
+  // Add spinner if not present
+  let spinner = document.getElementById('events-spinner');
+  if (!spinner) {
+    spinner = document.createElement('div');
+    spinner.id = 'events-spinner';
+    spinner.className = 'text-center my-4';
+    spinner.style.display = 'none';
+    spinner.innerHTML = `
+      <div class="spinner-border text-warning" role="status" style="width:3rem;height:3rem;">
+        <span class="visually-hidden">Ladataan tapahtumia...</span>
+      </div>
+      <div class="mt-2">Ladataan tapahtumia...</div>
+    `;
+    eventsSection.insertBefore(spinner, eventsSection.firstChild.nextSibling); // after h2
   }
+  // Hide list, show spinner
+  let oldList = eventsSection.querySelector('ul.list-group');
+  if (oldList) oldList.style.display = 'none';
+  spinner.style.display = '';
+  // Fetch and render events
+  const events = (await fetchEventSheet()).map(ev => ({
+    title: ev.title || 'Tapahtuma',
+    date: ev.date || '',
+    dateFormatted: formatDate(ev.date),
+    small_info: ev.small_info || '',
+    large_info: ev.large_info || '',
+    desc: ''
+  }));
+  // Remove old list if present
+  if (oldList) oldList.remove();
+  eventsSection.appendChild(renderEvents(events));
+  // Hide spinner, show list
+  spinner.style.display = 'none';
 }
 
 document.addEventListener('DOMContentLoaded', loadEvents);
