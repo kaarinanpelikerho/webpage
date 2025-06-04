@@ -28,7 +28,7 @@ body.light-theme {
   --color-hr: #e06a00;
   --color-event-info-bg: #fff3e0;
   --color-event-info-border: #e06a00;
-  --color-event-info-text: #e06a00;
+  --color-event-info-text: #181818;
   --color-navbar-toggler: #e06a00;
   --color-navbar-toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(224,106,0,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
   --color-carousel-bg: #fffbe6;
