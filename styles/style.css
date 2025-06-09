@@ -73,24 +73,12 @@ body.light-theme::before {
   box-shadow: 0 0 32px 0 rgba(0,0,0,0.4);
   padding: 0 0 24px 0;
   transition: background 0.3s;
-  margin-top: 56px; /* Height of disclaimer */
-}
-@media (max-width: 576px) {
-  .page-container {
-    margin-top: 70px; /* Slightly more for mobile */
-  }
 }
 section {
   padding: 60px 0;
 }
 .navbar {
   background: var(--color-navbar) !important;
-  top: 56px; /* Push navbar below disclaimer */
-}
-@media (max-width: 576px) {
-  .navbar.fixed-top {
-    top: 70px;
-  }
 }
 .navbar-brand, .nav-link {
   color: var(--color-navbar-link) !important;

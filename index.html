@@ -16,12 +16,8 @@
   <link rel="icon" href="favicon.ico?" type="image/x-icon">
 </head>
 
-<body>
-  <!-- Disclaimer: Work in progress -->
-  <div class="alert alert-warning text-center mb-0 w-100" style="border-radius:0; position:fixed; top:0; left:0; width:100%; z-index:2000;">
-    <strong>Huom!</strong> Tämä sivu on työn alla. Älä luota vielä sivun tietoihin.
-  </div>
-  <div class="logo-container d-flex justify-content-center align-items-center" style="padding-top:64px; padding-bottom:8px; background: transparent;">
+<body> 
+  <div class="logo-container d-flex justify-content-center align-items-center" style="padding-top:88px; padding-bottom:32px; background: transparent;">
     <img src="resources/logo.png" alt="Boardgame Group Logo" style="height:260px;width:auto;border-radius:18px;padding:0;box-shadow:0 2px 18px 0 rgba(0,0,0,0.12);background:none;">
   </div>
   <div class="page-container">
@@ -35,7 +31,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#infos">Tietoa</a>
+              <a class="nav-link" href="#about">Tietoa</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#events">Tulevat tapahtumat</a>
@@ -58,7 +54,7 @@
     <header class="hero">
       <div class="container text-center">
         <h1 class="display-4 mt-3">Tervetuloa Kaarinan pelikerhoon!</h1>
-        <p class="lead"><i class="fa-solid fa-dice me-2"></i> Rentoa lautapelaamista joka viikko – liity mukaan!</p>
+        <p class="lead"><i class="fa-solid fa-dice me-2"></i> Rentoa lautapelaamista joka viikko maksutta – liity mukaan!</p>
       </div>
     </header>
 
@@ -142,15 +138,23 @@
     <section id="contact" class="bg-white">
       <div class="container">
         <h2 class="mb-4"><i class="fa-solid fa-envelope"></i> Yhteystiedot</h2>
-        <p><i class="fa-solid fa-envelope"></i> Sähköposti: <a href="mailto:kaarinanpelikerho@gmail.com">kaarinanpelikerho@gmail.com</a></p>
-        <p><i class="fa-brands fa-instagram"></i> Seuraa meitä <a href="https://instagram.com/kaarinan_pelikerho" target="_blank">Instagramissa</a> pysyäksesi ajan tasalla.</p>
+        <div class="d-flex flex-column align-items-center w-100">
+          <div class="d-flex align-items-center mb-2" style="gap:13px;">
+            <i class="fa-solid fa-envelope" style="font-size:26px;"></i>
+            <span>Sähköposti: <a href="mailto:kaarinanpelikerho@gmail.com">kaarinanpelikerho@gmail.com</a></span>
+          </div>
+          <div class="d-flex align-items-center mb-2" style="gap:13px;">
+            <i class="fa-brands fa-instagram" style="font-size:26px;"></i>
+            <span>Seuraa meitä <a href="https://instagram.com/kaarinan_pelikerho" target="_blank">Instagramissa</a> pysyäksesi ajan tasalla.</span>
+          </div>
+        </div>
         <!-- Instagram Profile Embed -->
         <div class="d-flex justify-content-center mt-4 mb-4">
           <iframe src="https://www.instagram.com/kaarinan_pelikerho/embed" width="340" height="440" frameborder="0" scrolling="no" allowtransparency="true" style="border-radius:12px;background:#222;"></iframe>
         </div>
 
         <!-- Coordinator Carousel -->
-        <div class="text-center mb-2" style="font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--color-carousel-title); font-size: 1.25rem; letter-spacing: 0.5px;"><i class="fa-solid fa-users me-2"></i>Tutustu ylläpitäjiin</div>
+        <!--<div class="text-center mb-2" style="font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--color-carousel-title); font-size: 1.25rem; letter-spacing: 0.5px;"><i class="fa-solid fa-users me-2"></i>Tutustu ylläpitäjiin</div>
         <div id="coordinatorCarousel" class="carousel slide mt-2 mb-4 position-relative" style="max-width: 540px; margin: 0 auto; background: #fffbe6; border-radius: 16px; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07);">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -173,9 +177,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
           <!-- Custom Carousel Controls -->
-          <button class="carousel-control-prev custom-carousel-arrow" type="button" data-bs-target="#coordinatorCarousel" data-bs-slide="prev" style="left: -48px; top: 50%; transform: translateY(-50%); background: none; border: none; position: absolute; z-index: 10;">
+          <!--<button class="carousel-control-prev custom-carousel-arrow" type="button" data-bs-target="#coordinatorCarousel" data-bs-slide="prev" style="left: -48px; top: 50%; transform: translateY(-50%); background: none; border: none; position: absolute; z-index: 10;">
             <span style="font-size: 2.2rem; color: #ff8800;"><i class="fa-solid fa-circle-chevron-left"></i></span>
             <span class="visually-hidden">Edellinen</span>
           </button>
@@ -184,7 +188,7 @@
             <span class="visually-hidden">Seuraava</span>
           </button>
         </div>
-      </div>
+      </div>-->
     </section>
     <!-- Divider -->
     <div class="d-flex justify-content-center" style="margin:0;">
@@ -193,9 +197,13 @@
     <!-- Discord Section -->
     <section id="discord" class="bg-light" style="padding-top:32px;">
       <div class="container text-center">
-        <h2 class="mb-4"><i class="fa-brands fa-discord"></i> Liity Discordiin</h2>
         <p>Keskustele ja pysy yhteydessä yhteisöön!</p>
-        <a href="https://discord.gg/xbykjBw9nM" class="btn btn-primary" style="background:#5865F2;border:none;"><i class="fa-brands fa-discord"></i> Liity Discordiin</a>
+        <div class="d-flex justify-content-center">
+          <a href="https://discord.gg/xbykjBw9nM" class="btn btn-primary d-flex align-items-center justify-content-center" style="background:#5865F2;border:none;">
+            <i class="fa-brands fa-discord" style="font-size:26px;"></i>
+            <span class="ms-2">Liity Discordiin</span>
+          </a>
+        </div>
       </div>
     </section>
 
