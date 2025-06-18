@@ -77,11 +77,11 @@ function renderEvents(events) {
       expandBtn.setAttribute('aria-expanded', 'false');
       expandBtn.setAttribute('aria-controls', `event-large-info-${idx}`);
       expandBtn.setAttribute('title', 'Näytä lisätiedot');
-      expandBtn.innerHTML = getChevronSVG('down');
+      expandBtn.innerHTML = '<i class="fa fa-chevron-down"></i>';
       expandBtn.onclick = function() {
         const expanded = expandBtn.getAttribute('aria-expanded') === 'true';
         expandBtn.setAttribute('aria-expanded', String(!expanded));
-        expandBtn.innerHTML = expanded ? getChevronSVG('down') : getChevronSVG('up');
+        expandBtn.innerHTML = expanded ? '<i class="fa fa-chevron-down"></i>' : '<i class="fa fa-chevron-up"></i>';
         if (largeInfoDiv) largeInfoDiv.style.display = expanded ? 'none' : 'block';
       };
       right.appendChild(expandBtn);
@@ -193,26 +193,6 @@ async function loadEvents() {
   }
   // Hide spinner, show list or message
   spinner.style.display = 'none';
-}
-
-function getTheme() {
-  // Try to detect theme from body or html class, fallback to 'dark'
-  const body = document.body;
-  if (body.classList.contains('theme-light')) return 'light';
-  if (body.classList.contains('theme-dark')) return 'dark';
-  // Try html element
-  const html = document.documentElement;
-  if (html.classList.contains('theme-light')) return 'light';
-  if (html.classList.contains('theme-dark')) return 'dark';
-  // Fallback
-  return 'dark';
-}
-
-function getChevronSVG(direction) {
-  const theme = getTheme();
-  const file = direction === 'down' ? `chevron-down-solid-${theme}.svg` : `chevron-up-solid-${theme}.svg`;
-  // Use flex and align-items-center for vertical alignment
-  return `<span style="display:inline-flex;align-items:center;vertical-align:middle;height:1.25em;"><img src="icons/${file}" alt="${direction === 'down' ? 'Näytä lisätiedot' : 'Piilota lisätiedot'}" style="width:1.25em;height:1.25em;display:block;"></span>`;
 }
 
 document.addEventListener('DOMContentLoaded', loadEvents);

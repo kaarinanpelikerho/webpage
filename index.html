@@ -7,6 +7,9 @@
   <meta name="description" content="Rentoa pelaamista Kaarinan pelikerhossa joka keskiviikko!" />
   <title>Kaarinan pelikerho</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/colors-dark.css">
   <link rel="stylesheet" href="styles/colors-light.css">
   <link rel="stylesheet" href="styles/style.css">
@@ -41,7 +44,7 @@
             </li>
           </ul>
           <button id="theme-toggle" class="theme-toggle-btn" title="Vaihda teema" aria-label="Vaihda teema">
-            <span id="theme-toggle-icon" class="theme-icon" data-icon="moon"></span>
+            <i id="theme-toggle-icon" class="fa-solid fa-moon"></i>
           </button>
         </div>
       </div>
@@ -51,13 +54,13 @@
     <header class="hero">
       <div class="container text-center">
         <h1 class="display-4 mt-3">Tervetuloa Kaarinan pelikerhoon!</h1>
-        <p class="lead"><span class="theme-icon me-2" data-icon="dice"></span> Rentoa lautapelaamista joka viikko maksutta – liity mukaan!</p>
+        <p class="lead"><i class="fa-solid fa-dice me-2"></i> Rentoa lautapelaamista joka viikko maksutta – liity mukaan!</p>
       </div>
     </header>
 
     <section id="infos" class="bg-light" style="background: #fffbe6; display: none;">
       <div class="container">
-        <h2 class="mb-4"><span class="theme-icon" data-icon="circle-info"></span> Infotaulu</h2>
+        <h2 class="mb-4"><i class="fa-solid fa-circle-info"></i> Infotaulu</h2>
         <ul class="list-group" id="info-list">
           <!-- Infos will be loaded here by infos-loader.js -->
         </ul>
@@ -67,7 +70,7 @@
     <!-- About Section -->
     <section id="about" class="bg-white">
       <div class="container">
-        <h2 class="mb-4"><span class="theme-icon" data-icon="clock"></span> Milloin & Missä</h2>
+        <h2 class="mb-4"><i class="fa-solid fa-clock"></i> Milloin & Missä</h2>
         <p>Kokoontumiset joka <strong>keskiviikko klo 17:00 Kaarinan pääkirjastolla, Lautakunnankatu 1, 20780 Kaarina</strong>.</p>
         <p>Kaikki ovat tervetulleita! Tuo omat pelisi tai pelaa <a href="games">pelivalikoimassa</a> olevia pelejä.</p>
       </div>
@@ -76,7 +79,7 @@
     <!-- Kuukauden teema section -->
     <section id="theme-of-the-month" class="bg-light">
       <div class="container" style="max-width:700px; margin:auto;">
-        <h2 class="mb-4"><span class="theme-icon" data-icon="puzzle-piece"></span> Kuukauden teema</h2>
+        <h2 class="mb-4"><i class="fa-solid fa-puzzle-piece"></i> Kuukauden teema</h2>
         <div class="row align-items-start justify-content-center flex-md-row flex-column text-center text-md-start">
           <div class="col-12 col-md-5 mb-3 mb-md-0 d-flex justify-content-center">
             <a href="resources/game_theme.png" target="_blank" rel="noopener" style="display:inline-block;">
@@ -123,7 +126,7 @@
     <!-- Events Section -->
     <section id="events" class="bg-light" style="padding-top: 0;">
       <div class="container">
-        <h2 class="mb-4"><span class="theme-icon" data-icon="calendar-days"></span> Tulevat tapahtumat</h2>
+        <h2 class="mb-4"><i class="fa-solid fa-calendar-days"></i> Tulevat tapahtumat</h2>
         <ul class="list-group" id="event-list">
           <!-- Events will be loaded here by events-loader.js -->
         </ul>
@@ -133,14 +136,14 @@
     <!-- Contact Section -->
     <section id="contact" class="bg-white">
       <div class="container">
-        <h2 class="mb-4"><span class="theme-icon" data-icon="envelope"></span> Yhteystiedot</h2>
+        <h2 class="mb-4"><i class="fa-solid fa-envelope"></i> Yhteystiedot</h2>
         <div class="d-flex flex-column align-items-center w-100">
-          <div class="d-flex align-items-center mb-2">
-            <span class="theme-icon" data-icon="envelope-white" style="font-size:26px;"></span>
+          <div class="d-flex align-items-center mb-2" style="gap:13px;">
+            <i class="fa-solid fa-envelope" style="font-size:26px;"></i>
             <span>Sähköposti: <a href="mailto:kaarinanpelikerho@gmail.com">kaarinanpelikerho@gmail.com</a></span>
           </div>
-          <div class="d-flex align-items-center mb-2">
-            <span class="theme-icon" data-icon="instagram" style="font-size:26px;"></span>
+          <div class="d-flex align-items-center mb-2" style="gap:13px;">
+            <i class="fa-brands fa-instagram" style="font-size:26px;"></i>
             <span>Seuraa meitä <a href="https://instagram.com/kaarinan_pelikerho" target="_blank">Instagramissa</a> pysyäksesi ajan tasalla.</span>
           </div>
         </div>
@@ -196,7 +199,7 @@
         <p>Keskustele ja pysy yhteydessä yhteisöön!</p>
         <div class="d-flex justify-content-center">
           <a href="https://discord.gg/xbykjBw9nM" class="btn btn-primary d-flex align-items-center justify-content-center" style="background:#5865F2;border:none;">
-            <span class="theme-icon" data-icon="discord" style="font-size:26px;"></span>
+            <i class="fa-brands fa-discord" style="font-size:26px;"></i>
             <span class="ms-2">Liity Discordiin</span>
           </a>
         </div>
@@ -234,75 +237,19 @@
       }
       return null;
     }
-    // SVG icon mapping
-    const ICONS = {
-      'calendar-days': {
-        dark: 'icons/calendar-days-solid-dark.svg',
-        light: 'icons/calendar-days-solid-light.svg'
-      },
-      'clock': {
-        dark: 'icons/clock-solid-dark.svg',
-        light: 'icons/clock-solid-light.svg'
-      },
-      'dice': {
-        dark: 'icons/dice-solid-dark.svg',
-        light: 'icons/dice-solid-light.svg'
-      },
-      'envelope': {
-        dark: 'icons/envelope-solid-dark.svg',
-        light: 'icons/envelope-solid-light.svg'
-      },
-      'envelope-white': {
-        dark: 'icons/envelope-white-solid-dark.svg',
-        light: 'icons/envelope-white-solid-light.svg'
-      },
-      'moon': {
-        dark: 'icons/moon-solid-dark.svg',
-        light: 'icons/moon-solid-light.svg'
-      },
-      'puzzle-piece': {
-        dark: 'icons/puzzle-piece-solid-dark.svg',
-        light: 'icons/puzzle-piece-solid-light.svg'
-      },
-      'sun': {
-        dark: 'icons/sun-solid-dark.svg',
-        light: 'icons/sun-solid-light.svg'
-      },
-      'discord': {
-        dark: 'icons/discord-solid-dark.svg',
-        light: 'icons/discord-solid-light.svg'
-      },
-      'instagram': {
-        dark: 'icons/instagram-solid-dark.svg',
-        light: 'icons/instagram-solid-light.svg'
-      },
-      'circle-info': {
-        dark: 'icons/envelope-solid-dark.svg', // fallback, update if you have info icon
-        light: 'icons/envelope-solid-light.svg' // fallback, update if you have info icon
-      }
-    };
-    function updateThemeIcons(theme) {
-      document.querySelectorAll('.theme-icon').forEach(function(el) {
-        const icon = el.getAttribute('data-icon');
-        if (ICONS[icon]) {
-          el.innerHTML = `<img src="${ICONS[icon][theme]}" alt="${icon}" class="svg-icon">`;
-        }
-      });
-    }
     function setTheme(theme) {
       const btn = document.getElementById('theme-toggle');
       const icon = document.getElementById('theme-toggle-icon');
       if (theme === 'light') {
         document.body.classList.add('light-theme');
-        icon.setAttribute('data-icon', 'sun');
+        icon.className = 'fa-solid fa-sun';
         btn.classList.add('active');
       } else {
         document.body.classList.remove('light-theme');
-        icon.setAttribute('data-icon', 'moon');
+        icon.className = 'fa-solid fa-moon';
         btn.classList.remove('active');
       }
       setCookie('theme', theme, 365);
-      updateThemeIcons(theme);
     }
     document.getElementById('theme-toggle').addEventListener('click', function() {
       const isLight = document.body.classList.contains('light-theme');
