@@ -4,12 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Boardgame group homepage with meeting info and future events." />
+  <meta name="description" content="Rentoa pelaamista Kaarinan pelikerhossa joka keskiviikko!" />
   <title>Kaarinan pelikerho</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/colors-dark.css">
   <link rel="stylesheet" href="styles/colors-light.css">
   <link rel="stylesheet" href="styles/style.css">
@@ -30,8 +27,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
+          </ul>
           <button id="theme-toggle" class="theme-toggle-btn" title="Vaihda teema" aria-label="Vaihda teema">
-            <i id="theme-toggle-icon" class="fa-solid fa-moon"></i>
+            <span id="theme-toggle-icon" class="theme-icon" data-icon="moon"></span>
           </button>
         </div>
       </div>
@@ -40,7 +38,7 @@
     <!-- Hero -->
     <header class="hero-slim">
       <div class="container text-center">
-        <h1 class="display-4 mt-3"><i class="fa-solid fa-dice me-2"></i> Pelikokoelma!</h1>
+        <h1 class="display-4 mt-3"><span class="theme-icon me-2" data-icon="dice"></span> Pelikokoelma!</h1>
       </div>
     </header>
 
@@ -83,7 +81,7 @@
         <p>Keskustele ja pysy yhteydessä yhteisöön!</p>
         <div class="d-flex justify-content-center">
           <a href="https://discord.gg/xbykjBw9nM" class="btn btn-primary d-flex align-items-center justify-content-center" style="background:#5865F2;border:none;">
-            <i class="fa-brands fa-discord" style="font-size:26px;"></i>
+            <span class="theme-icon" data-icon="discord" style="font-size:26px;"></span>
             <span class="ms-2">Liity Discordiin</span>
           </a>
         </div>
@@ -121,19 +119,63 @@
       }
       return null;
     }
+    // SVG icon mapping
+    const ICONS = {
+      'calendar-days': {
+        dark: 'icons/calendar-days-solid-dark.svg',
+        light: 'icons/calendar-days-solid-light.svg'
+      },
+      'clock': {
+        dark: 'icons/clock-solid-dark.svg',
+        light: 'icons/clock-solid-light.svg'
+      },
+      'dice': {
+        dark: 'icons/dice-solid-dark.svg',
+        light: 'icons/dice-solid-light.svg'
+      },
+      'envelope': {
+        dark: 'icons/envelope-solid-dark.svg',
+        light: 'icons/envelope-solid-light.svg'
+      },
+      'moon': {
+        dark: 'icons/moon-solid-dark.svg',
+        light: 'icons/moon-solid-light.svg'
+      },
+      'puzzle-piece': {
+        dark: 'icons/puzzle-piece-solid-dark.svg',
+        light: 'icons/puzzle-piece-solid-light.svg'
+      },
+      'sun': {
+        dark: 'icons/sun-solid-dark.svg',
+        light: 'icons/sun-solid-light.svg'
+      },
+      'discord': {
+        dark: 'icons/discord-solid-dark.svg',
+        light: 'icons/discord-solid-light.svg'
+      }
+    };
+    function updateThemeIcons(theme) {
+      document.querySelectorAll('.theme-icon').forEach(function(el) {
+        const icon = el.getAttribute('data-icon');
+        if (ICONS[icon]) {
+          el.innerHTML = `<img src="${ICONS[icon][theme]}" alt="${icon}" class="svg-icon">`;
+        }
+      });
+    }
     function setTheme(theme) {
       const btn = document.getElementById('theme-toggle');
       const icon = document.getElementById('theme-toggle-icon');
       if (theme === 'light') {
         document.body.classList.add('light-theme');
-        icon.className = 'fa-solid fa-sun';
+        icon.setAttribute('data-icon', 'sun');
         btn.classList.add('active');
       } else {
         document.body.classList.remove('light-theme');
-        icon.className = 'fa-solid fa-moon';
+        icon.setAttribute('data-icon', 'moon');
         btn.classList.remove('active');
       }
       setCookie('theme', theme, 365);
+      updateThemeIcons(theme);
     }
     document.getElementById('theme-toggle').addEventListener('click', function() {
       const isLight = document.body.classList.contains('light-theme');
