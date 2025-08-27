@@ -50,7 +50,15 @@ function parseCustomLinks(str) {
 function renderEvents(events) {
   const ul = document.createElement('ul');
   ul.className = 'list-group';
-  events.sort((a, b) => new Date(a.date) - new Date(b.date));
+  // Sort using Finnish date parser to avoid locale-based parsing issues
+  events.sort((a, b) => {
+    const da = parseFinnishDate(a.date);
+    const db = parseFinnishDate(b.date);
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
+    return da - db;
+  });
   events.forEach((ev, idx) => {
     const li = document.createElement('li');
     li.className = 'list-group-item d-flex flex-column flex-md-row justify-content-between align-items-md-center';
@@ -102,9 +110,13 @@ function renderEvents(events) {
 }
 
 function formatDate(dateStr) {
-  const d = new Date(dateStr);
-  if (isNaN(d)) return dateStr;
-  return d.toLocaleDateString('fi-FI', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  // Parse as Finnish date and format as d.m.yyyy (no leading zeros)
+  const d = parseFinnishDate(dateStr);
+  if (!d) return dateStr;
+  const day = d.getDate();
+  const month = d.getMonth() + 1;
+  const year = d.getFullYear();
+  return `${day}.${month}.${year}`;
 }
 
 function parseFinnishDate(dateStr) {
