@@ -38,7 +38,7 @@
     <!-- Hero -->
     <header class="hero-slim">
       <div class="container text-center">
-        <h1 class="display-4 mt-3"><i class="fa-solid fa-dice me-2"></i> Pelikokoelma!</h1>
+        <h1 class="display-4 mt-3"><i class="fa-solid fa-dice me-2"></i> Pelikokoelma</h1>
       </div>
     </header>
 
@@ -54,17 +54,35 @@
           </div>
           <div class="mt-2">Ladataan pelejä...</div>
         </div>
-        <div class="table-responsive">
-          <table class="table table-striped align-middle">
-            <thead id="games-table-head">
-              <tr>
-                <th scope="col">Pelin nimi</th>
-              </tr>
-            </thead>
-            <tbody id="games-table-body">
-              <!-- Pelit ladataan dynaamisesti -->
-            </tbody>
-          </table>
+        <div class="row">
+          <div class="col-12 mb-4">
+            <div class="table-responsive">
+              <table class="table table-striped align-middle">
+                <thead id="games-table-head-current">
+                  <tr>
+                    <th scope="col">TOISTAISEKSI PELATTAVANA PELIKERHOLLA</th>
+                  </tr>
+                </thead>
+                <tbody id="games-table-body-current">
+                  <!-- Nykyiset pelit ladataan dynaamisesti -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-12 mb-4">
+            <div class="table-responsive">
+              <table class="table table-striped align-middle">
+                <thead id="games-table-head-loaned">
+                  <tr>
+                    <th scope="col">LAINATUT PELIT</th>
+                  </tr>
+                </thead>
+                <tbody id="games-table-body-loaned">
+                  <!-- Lainatut pelit ladataan dynaamisesti -->
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
         <div class="text-center mt-2 mb-0" style="font-size:0.98em;" id="games-info-dynamic">
           <!-- Info from sheet will be loaded here -->
@@ -152,11 +170,39 @@
 
     // --- Games table fetcher ---
     const gamesSpinner = document.getElementById('games-spinner');
-    const gamesTableBody = document.getElementById('games-table-body');
-    const gamesTableHead = document.getElementById('games-table-head');
+    const gamesTableBodyCurrent = document.getElementById('games-table-body-current');
+    const gamesTableBodyLoaned = document.getElementById('games-table-body-loaned');
+    const gamesTableHeadCurrent = document.getElementById('games-table-head-current');
+    const gamesTableHeadLoaned = document.getElementById('games-table-head-loaned');
     function showGamesSpinner(show) {
       if (gamesSpinner) gamesSpinner.style.display = show ? '' : 'none';
-      if (gamesTableHead) gamesTableHead.style.display = show ? 'none' : '';
+      if (gamesTableHeadCurrent) gamesTableHeadCurrent.style.display = show ? 'none' : '';
+      if (gamesTableHeadLoaned) gamesTableHeadLoaned.style.display = show ? 'none' : '';
+    }
+    // Robust single-line CSV parser (handles quoted fields and commas inside quotes)
+    function parseCsvLine(line) {
+      const cells = [];
+      let cur = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          // Handle escaped double quotes inside quoted field
+          if (inQuotes && i + 1 < line.length && line[i + 1] === '"') {
+            cur += '"';
+            i++; // skip the escaped quote
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === ',' && !inQuotes) {
+          cells.push(cur);
+          cur = '';
+        } else {
+          cur += ch;
+        }
+      }
+      cells.push(cur);
+      return cells;
     }
     async function fetchGames() {
       showGamesSpinner(true);
@@ -166,42 +212,70 @@
         const csv = await res.text();
         // Parse CSV
         const lines = csv.split(/\r?\n/).filter(line => line.trim() !== '');
-        let games = [];
+        let currentGames = [];
+        let loanedGames = [];
         let infoTexts = [];
+        // We use section markers in the sheet to divide games into two sections.
+        // By convention, rows containing the text 'TOISTAISEKSI PELATTAVANA PELIKERHOLLA'
+        // and 'LAINATUT PELIT' switch the current target section.
+        let section = 'current'; // default until a marker changes it
         for (let i = 1; i < lines.length; i++) { // skip header
-          const cells = lines[i].split(',');
+          const cells = parseCsvLine(lines[i]);
           if (cells.length >= 1) {
-            const peli = cells[0].replace(/^"|"$/g, '').trim();
-            if (peli) games.push({ peli });
+            const peli = (cells[0] || '').trim();
+            if (!peli) continue;
+            const peliUpper = peli.toUpperCase();
+            if (peliUpper.includes('TOISTAISEKSI PELATTAVANA PELIKERHOLLA')) {
+              section = 'current';
+              continue;
+            }
+            if (peliUpper.includes('LAINATUT PELIT')) {
+              section = 'loaned';
+              continue;
+            }
+            if (section === 'current') {
+              currentGames.push({ peli });
+            } else {
+              loanedGames.push({ peli });
+            }
             if (cells.length > 1) {
-              const info = cells[1].replace(/^"|"$/g, '').trim();
+              const info = (cells[1] || '').trim();
               if (info) infoTexts.push(info);
             }
           }
         }
         // Populate table
-        gamesTableBody.innerHTML = '';
-        games.forEach(game => {
-          let peliName = game.peli;
-          if (peliName.toUpperCase().includes('VANHAT:')) {
-            peliName = 'Jo edellisenä viikolla kerhossa pelattavana olleet:';
-          } else if (peliName.toUpperCase().includes('UUDET:')) {
-            peliName = 'Saapuneet uudet varaukset, jotka pelattavissa:';
-          }
-          if (game.peli.includes('Jo edellisenä viikolla kerhossa pelattavana olleet:') || game.peli.includes('Saapuneet uudet varaukset jotka pelattavissa:')) {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<th colspan="1" class="table-category-header">${peliName}</th>`;
-            gamesTableBody.appendChild(tr);
-          } else {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${peliName}</td>`;
-            gamesTableBody.appendChild(tr);
-          }
+        if (gamesTableBodyCurrent) gamesTableBodyCurrent.innerHTML = '';
+        if (gamesTableBodyLoaned) gamesTableBodyLoaned.innerHTML = '';
+        currentGames.forEach(game => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${game.peli}</td>`;
+          gamesTableBodyCurrent.appendChild(tr);
+        });
+        loanedGames.forEach(game => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${game.peli}</td>`;
+          gamesTableBodyLoaned.appendChild(tr);
         });
         // Show info texts
         const infoDiv = document.getElementById('games-info-dynamic');
+        // Prefer a sheet-level Info cell (header 'Info' with a single cell under it),
+        // which is commonly B2 in the sheet. Fall back to aggregated infoTexts if not present.
+        let sheetInfo = '';
+        try {
+          if (lines.length > 1) {
+            const header = parseCsvLine(lines[0] || '');
+            const infoIdx = header.findIndex(h => (h || '').trim().toLowerCase() === 'info');
+            if (infoIdx !== -1 && lines.length > 1) {
+              const firstData = parseCsvLine(lines[1] || '');
+              sheetInfo = (firstData[infoIdx] || '').trim();
+            }
+          }
+        } catch (e) {
+          console.log('Error extracting sheet Info cell:', e && e.message ? e.message : e);
+        }
         if (infoDiv) {
-          infoDiv.innerHTML = infoTexts.join('<br>');
+          infoDiv.innerHTML = sheetInfo ? sheetInfo : infoTexts.join('<br>');
         }
       } catch (e) {
         gamesTableBody.innerHTML = `<tr><td>Virhe ladattaessa pelejä: ${e.message}</td></tr>`;
